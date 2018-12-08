@@ -14,10 +14,10 @@ after_success:
   - docker build -t bhades/multi-server ./server
   - docker build -t bhades/multi-worker ./worker
 
-# log into docker CLI
-- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-# push images
-- docker push bhades/multi-client
-- docker push bhades/multi-nginx
-- docker push bhades/multi-server
-- docker push bhades/multi-worker
+  # log into docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # push images
+  - docker push bhades/multi-client
+  - docker push bhades/multi-nginx
+  - docker push bhades/multi-server
+  - docker push bhades/multi-worker
