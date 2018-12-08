@@ -1,0 +1,23 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t bhades/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run bhades/react-test npm test -- --cover
+
+after_success:
+  - docker build -t bhades/multi-client ./client
+  - docker build -t bhades/multi-nginx ./nginx
+  - docker build -t bhades/multi-server ./server
+  - docker build -t bhades/multi-worker ./worker
+
+# log into docker CLI
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+# push images
+- docker push bhades/multi-client
+- docker push bhades/multi-nginx
+- docker push bhades/multi-server
+- docker push bhades/multi-worker
